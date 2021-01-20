@@ -19,7 +19,7 @@ class Schema(Base):
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
-    cluster = relationship('Cluster', uselist=False)
+    cluster = relationship('Cluster')
     description = relationship('SchemaDescription', uselist=False)
 
 

@@ -24,10 +24,10 @@ class Table(Base):
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
+    schema = relationship('Schema')
     application = relationship('Application', uselist=False, secondary='application_table')
-    schema = relationship('Schema', uselist=False)
     columns = relationship('TableColumn', order_by='TableColumn.sort_order')
-    description = relationship('TableDescription', order_by='TableDescription.rk', uselist=False)
+    description = relationship('TableDescription', uselist=False)
     programmatic_descriptions = relationship('TableProgrammaticDescription', order_by='TableProgrammaticDescription.rk')
     tags = relationship('Tag', order_by='Tag.rk', secondary='table_tag')
     badges = relationship('Badge', order_by='Badge.rk', secondary='table_badge')

@@ -8,10 +8,10 @@ from amundsen_rds.models.column import (
     ColumnBadge, ColumnDescription, ColumnStat, TableColumn
 )
 from amundsen_rds.models.dashboard import (
-    Dashboard, DashboardBadge, DashboardChart, DashboardDescription,
-    DashboardExecution, DashboardFollower, DashboardGroup,
-    DashboardGroupDescription, DashboardOwner, DashboardQuery, DashboardTable,
-    DashboardTag, DashboardTimestamp, DashboardUsage
+    Dashboard, DashboardBadge, DashboardChart, DashboardCluster,
+    DashboardDescription, DashboardExecution, DashboardFollower,
+    DashboardGroup, DashboardGroupDescription, DashboardOwner, DashboardQuery,
+    DashboardTable, DashboardTag, DashboardTimestamp, DashboardUsage
 )
 from amundsen_rds.models.database import Database
 from amundsen_rds.models.schema import Schema, SchemaDescription
@@ -36,6 +36,7 @@ __all__ = [
     'Dashboard',
     'DashboardBadge',
     'DashboardChart',
+    'DashboardCluster',
     'DashboardDescription',
     'DashboardExecution',
     'DashboardFollower',

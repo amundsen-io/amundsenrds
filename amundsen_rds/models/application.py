@@ -25,11 +25,11 @@ class Application(Base):
 
 class ApplicationTable(Base):
     """
-    Association model for application-table.
+    Model for tables derived from applications
     """
     __tablename__ = 'application_table'
 
-    application_rk = Column(String(KEY_LEN), ForeignKey('application.rk', ondelete='cascade'), primary_key=True)
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
+    rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
+    application_rk = Column(String(KEY_LEN), ForeignKey('application.rk', ondelete='cascade'), nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)

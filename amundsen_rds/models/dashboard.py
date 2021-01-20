@@ -23,7 +23,7 @@ class Dashboard(Base):
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
-    group = relationship('DashboardGroup', uselist=False)
+    group = relationship('DashboardGroup')
     description = relationship('DashboardDescription', uselist=False)
     timestamp = relationship('DashboardTimestamp', uselist=False)
     execution = relationship('DashboardExecution', uselist=False)
@@ -137,6 +137,18 @@ class DashboardTimestamp(Base):
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
 
+class DashboardCluster(Base):
+    """
+    Cluster model for dashboard.
+    """
+    __tablename__ = 'dashboard_cluster'
+
+    rk = Column(String(KEY_LEN), primary_key=True)
+    name = Column(String(NAME_LEN), nullable=False)
+    published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
+    publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
+
+
 class DashboardGroup(Base):
     """
     Dashboard_group model.
@@ -146,11 +158,11 @@ class DashboardGroup(Base):
     rk = Column(String(KEY_LEN), primary_key=True)
     name = Column(String(NAME_LEN), nullable=False)
     dashboard_group_url = Column(String(URL_LEN))
-    cluster_rk = Column(String(KEY_LEN), ForeignKey('cluster_metadata.rk', ondelete='cascade'), nullable=False)
+    cluster_rk = Column(String(KEY_LEN), ForeignKey('dashboard_cluster.rk', ondelete='cascade'), nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
-    cluster = relationship('Cluster', uselist=False)
+    cluster = relationship('DashboardCluster')
     description = relationship('DashboardGroupDescription', uselist=False)
 
 
