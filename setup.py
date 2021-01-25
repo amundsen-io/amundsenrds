@@ -26,4 +26,5 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
+    package_data={'amundsen_rds': ['py.typed']}
 )
