@@ -5,7 +5,8 @@ from sqlalchemy import BigInteger, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 
 from amundsen_rds.models.base import (
-    KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, URL_LEN, Base
+    INDEX_KEY_COLLATION_ARGS, KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, URL_LEN,
+    Base
 )
 
 
@@ -15,11 +16,13 @@ class Dashboard(Base):
     """
     __tablename__ = 'dashboard'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     name = Column(String(NAME_LEN), nullable=False)
     created_timestamp = Column(Integer)
     dashboard_url = Column(String(URL_LEN))
-    dashboard_group_rk = Column(String(KEY_LEN), ForeignKey('dashboard_group.rk', ondelete='cascade'), nullable=False)
+    dashboard_group_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                                ForeignKey('dashboard_group.rk', ondelete='cascade'),
+                                nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -43,9 +46,11 @@ class DashboardDescription(Base):
     """
     __tablename__ = 'dashboard_description'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     description = Column(Text)
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), nullable=False)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -56,8 +61,12 @@ class DashboardBadge(Base):
     """
     __tablename__ = 'dashboard_badge'
 
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), primary_key=True)
-    badge_rk = Column(String(KEY_LEN), ForeignKey('badge.rk', ondelete='cascade'), primary_key=True)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          primary_key=True)
+    badge_rk = Column(String(128, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('badge.rk', ondelete='cascade'),
+                      primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -68,8 +77,12 @@ class DashboardUsage(Base):
     """
     __tablename__ = 'dashboard_usage'
 
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), primary_key=True)
-    user_rk = Column(String(KEY_LEN), ForeignKey('users.rk', ondelete='cascade'), primary_key=True)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          primary_key=True)
+    user_rk = Column(String(320, **INDEX_KEY_COLLATION_ARGS),
+                     ForeignKey('users.rk', ondelete='cascade'),
+                     primary_key=True)
     read_count = Column(Integer, nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
@@ -81,8 +94,12 @@ class DashboardOwner(Base):
     """
     __tablename__ = 'dashboard_owner'
 
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), primary_key=True)
-    user_rk = Column(String(KEY_LEN), ForeignKey('users.rk', ondelete='cascade'), primary_key=True)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          primary_key=True)
+    user_rk = Column(String(320, **INDEX_KEY_COLLATION_ARGS),
+                     ForeignKey('users.rk', ondelete='cascade'),
+                     primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -93,8 +110,12 @@ class DashboardFollower(Base):
     """
     __tablename__ = 'dashboard_follower'
 
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), primary_key=True)
-    user_rk = Column(String(KEY_LEN), ForeignKey('users.rk', ondelete='cascade'), primary_key=True)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          primary_key=True)
+    user_rk = Column(String(320, **INDEX_KEY_COLLATION_ARGS),
+                     ForeignKey('users.rk', ondelete='cascade'),
+                     primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -105,8 +126,12 @@ class DashboardTable(Base):
     """
     __tablename__ = 'dashboard_table'
 
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), primary_key=True)
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          primary_key=True)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -117,8 +142,12 @@ class DashboardTag(Base):
     """
     __tablename__ = 'dashboard_tag'
 
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), primary_key=True)
-    tag_rk = Column(String(KEY_LEN), ForeignKey('tag.rk', ondelete='cascade'), primary_key=True)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          primary_key=True)
+    tag_rk = Column(String(128, **INDEX_KEY_COLLATION_ARGS),
+                    ForeignKey('tag.rk', ondelete='cascade'),
+                    primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -129,10 +158,12 @@ class DashboardTimestamp(Base):
     """
     __tablename__ = 'dashboard_timestamp'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     timestamp = Column(Integer, nullable=False)
     name = Column(String(NAME_LEN), nullable=False)
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), nullable=False)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -143,7 +174,7 @@ class DashboardCluster(Base):
     """
     __tablename__ = 'dashboard_cluster'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     name = Column(String(NAME_LEN), nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
@@ -155,10 +186,12 @@ class DashboardGroup(Base):
     """
     __tablename__ = 'dashboard_group'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     name = Column(String(NAME_LEN), nullable=False)
     dashboard_group_url = Column(String(URL_LEN))
-    cluster_rk = Column(String(KEY_LEN), ForeignKey('dashboard_cluster.rk', ondelete='cascade'), nullable=False)
+    cluster_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                        ForeignKey('dashboard_cluster.rk', ondelete='cascade'),
+                        nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -172,9 +205,11 @@ class DashboardGroupDescription(Base):
     """
     __tablename__ = 'dashboard_group_description'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     description = Column(Text)
-    dashboard_group_rk = Column(String(KEY_LEN), ForeignKey('dashboard_group.rk', ondelete='cascade'), nullable=False)
+    dashboard_group_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                                ForeignKey('dashboard_group.rk', ondelete='cascade'),
+                                nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -185,10 +220,12 @@ class DashboardExecution(Base):
     """
     __tablename__ = 'dashboard_execution'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     timestamp = Column(Integer, nullable=False)
     state = Column(String(16), nullable=False)
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), nullable=False)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -199,12 +236,14 @@ class DashboardQuery(Base):
     """
     __tablename__ = 'dashboard_query'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     id = Column(String(32), nullable=False)
     name = Column(String(NAME_LEN), nullable=False)
     url = Column(String(URL_LEN))
     query_text = Column(Text)
-    dashboard_rk = Column(String(KEY_LEN), ForeignKey('dashboard.rk', ondelete='cascade'), nullable=False)
+    dashboard_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                          ForeignKey('dashboard.rk', ondelete='cascade'),
+                          nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -217,11 +256,13 @@ class DashboardChart(Base):
     """
     __tablename__ = 'dashboard_chart'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     id = Column(String(32), nullable=False)
     name = Column(String(NAME_LEN))
     type = Column(String(32))
     url = Column(String(URL_LEN))
-    query_rk = Column(String(KEY_LEN), ForeignKey('dashboard_query.rk', ondelete='cascade'), nullable=False)
+    query_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('dashboard_query.rk', ondelete='cascade'),
+                      nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)

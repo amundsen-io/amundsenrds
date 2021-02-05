@@ -3,7 +3,7 @@
 
 from sqlalchemy import BigInteger, Column, Integer, String
 
-from amundsen_rds.models.base import KEY_LEN, PUBLISHED_TAG_LEN, Base
+from amundsen_rds.models.base import PUBLISHED_TAG_LEN, Base
 
 
 class UpdatedTimestamp(Base):
@@ -12,7 +12,7 @@ class UpdatedTimestamp(Base):
     """
     __tablename__ = 'updated_timestamp'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(64), primary_key=True)
     last_timestamp = Column(Integer, nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
