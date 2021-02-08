@@ -4,7 +4,8 @@
 from sqlalchemy import BigInteger, Column, ForeignKey, String, Text
 
 from amundsen_rds.models.base import (
-    KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, URL_LEN, Base
+    INDEX_KEY_COLLATION_ARGS, KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, URL_LEN,
+    Base
 )
 
 
@@ -14,7 +15,7 @@ class Application(Base):
     """
     __tablename__ = 'application'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     application_url = Column(String(URL_LEN), nullable=False)
     name = Column(String(NAME_LEN), nullable=False)
     id = Column(String(128), nullable=False)
@@ -29,7 +30,11 @@ class ApplicationTable(Base):
     """
     __tablename__ = 'application_table'
 
-    rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
-    application_rk = Column(String(KEY_LEN), ForeignKey('application.rk', ondelete='cascade'), nullable=False)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                ForeignKey('table_metadata.rk', ondelete='cascade'),
+                primary_key=True)
+    application_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                            ForeignKey('application.rk', ondelete='cascade'),
+                            nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)

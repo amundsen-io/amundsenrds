@@ -3,7 +3,9 @@
 
 from sqlalchemy import BigInteger, Column, String
 
-from amundsen_rds.models.base import KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, Base
+from amundsen_rds.models.base import (
+    INDEX_KEY_COLLATION_ARGS, KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, Base
+)
 
 
 class Database(Base):
@@ -12,7 +14,7 @@ class Database(Base):
     """
     __tablename__ = 'database_metadata'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     name = Column(String(NAME_LEN), nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)

@@ -7,7 +7,8 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 
 from amundsen_rds.models.base import (
-    KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, URL_LEN, Base
+    INDEX_KEY_COLLATION_ARGS, KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, URL_LEN,
+    Base
 )
 
 
@@ -17,10 +18,12 @@ class Table(Base):
     """
     __tablename__ = 'table_metadata'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     name = Column(String(NAME_LEN), nullable=False)
     is_view = Column(Boolean, nullable=False)
-    schema_rk = Column(String(KEY_LEN), ForeignKey('schema_metadata.rk', ondelete='cascade'), nullable=False)
+    schema_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                       ForeignKey('schema_metadata.rk', ondelete='cascade'),
+                       nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -46,10 +49,12 @@ class TableDescription(Base):
     """
     __tablename__ = 'table_description'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     description_source = Column(String(32), nullable=False)
     description = Column(Text)
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), nullable=False)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -60,10 +65,12 @@ class TableProgrammaticDescription(Base):
     """
     __tablename__ = 'table_programmatic_description'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     description_source = Column(String(32), nullable=False)
     description = Column(Text)
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), nullable=False)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -74,8 +81,12 @@ class TableUsage(Base):
     """
     __tablename__ = 'table_usage'
 
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
-    user_rk = Column(String(KEY_LEN), ForeignKey('users.rk', ondelete='cascade'), primary_key=True)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      primary_key=True)
+    user_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                     ForeignKey('users.rk', ondelete='cascade'),
+                     primary_key=True)
     read_count = Column(Integer, nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
@@ -87,8 +98,12 @@ class TableOwner(Base):
     """
     __tablename__ = 'table_owner'
 
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
-    user_rk = Column(String(KEY_LEN), ForeignKey('users.rk', ondelete='cascade'), primary_key=True)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      primary_key=True)
+    user_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                     ForeignKey('users.rk', ondelete='cascade'),
+                     primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -99,8 +114,12 @@ class TableFollower(Base):
     """
     __tablename__ = 'table_follower'
 
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
-    user_rk = Column(String(KEY_LEN), ForeignKey('users.rk', ondelete='cascade'), primary_key=True)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      primary_key=True)
+    user_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                     ForeignKey('users.rk', ondelete='cascade'),
+                     primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -111,8 +130,12 @@ class TableTag(Base):
     """
     __tablename__ = 'table_tag'
 
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
-    tag_rk = Column(String(KEY_LEN), ForeignKey('tag.rk', ondelete='cascade'), primary_key=True)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      primary_key=True)
+    tag_rk = Column(String(128, **INDEX_KEY_COLLATION_ARGS),
+                    ForeignKey('tag.rk', ondelete='cascade'),
+                    primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -123,8 +146,12 @@ class TableBadge(Base):
     """
     __tablename__ = 'table_badge'
 
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), primary_key=True)
-    badge_rk = Column(String(KEY_LEN), ForeignKey('badge.rk', ondelete='cascade'), primary_key=True)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      primary_key=True)
+    badge_rk = Column(String(128, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('badge.rk', ondelete='cascade'),
+                      primary_key=True)
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
@@ -135,10 +162,12 @@ class TableSource(Base):
     """
     __tablename__ = 'table_source'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     source = Column(String(URL_LEN), nullable=False)
     source_type = Column(String(32), nullable=False)
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), nullable=False)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -149,11 +178,13 @@ class TableTimestamp(Base):
     """
     __tablename__ = 'table_timestamp'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     last_updated_timestamp = Column(Integer, nullable=False)
     timestamp = Column(Integer, nullable=False)
     name = Column(String(NAME_LEN), nullable=False)
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), nullable=False)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
@@ -164,10 +195,12 @@ class TableWatermark(Base):
     """
     __tablename__ = 'table_watermark'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     partition_key = Column(String(32), nullable=False)
     partition_value = Column(String(32), nullable=False)
     create_time = Column(String(32), nullable=False)
-    table_rk = Column(String(KEY_LEN), ForeignKey('table_metadata.rk', ondelete='cascade'), nullable=False)
+    table_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                      ForeignKey('table_metadata.rk', ondelete='cascade'),
+                      nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)

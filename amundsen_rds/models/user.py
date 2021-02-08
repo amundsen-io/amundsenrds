@@ -4,7 +4,9 @@
 from sqlalchemy import BigInteger, Boolean, Column, Integer, String
 from sqlalchemy.orm import relationship
 
-from amundsen_rds.models.base import KEY_LEN, PUBLISHED_TAG_LEN, Base
+from amundsen_rds.models.base import (
+    INDEX_KEY_COLLATION_ARGS, KEY_LEN, PUBLISHED_TAG_LEN, Base
+)
 
 
 class User(Base):
@@ -13,7 +15,7 @@ class User(Base):
     """
     __tablename__ = 'users'
 
-    rk = Column(String(KEY_LEN), primary_key=True)
+    rk = Column(String(320, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     email = Column(String(320), nullable=False)
     is_active = Column(Boolean)
     first_name = Column(String(64))
