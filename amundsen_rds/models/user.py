@@ -5,7 +5,7 @@ from sqlalchemy import BigInteger, Boolean, Column, Integer, String
 from sqlalchemy.orm import relationship
 
 from amundsen_rds.models.base import (
-    INDEX_KEY_COLLATION_ARGS, KEY_LEN, PUBLISHED_TAG_LEN, Base
+    INDEX_KEY_COLLATION_ARGS, PUBLISHED_TAG_LEN, Base
 )
 
 
@@ -27,7 +27,7 @@ class User(Base):
     slack_id = Column(String(32))
     role_name = Column(String(32))
     updated_at = Column(Integer)
-    manager_rk = Column(String(KEY_LEN))
+    manager_rk = Column(String(320, **INDEX_KEY_COLLATION_ARGS))
     published_tag = Column(String(PUBLISHED_TAG_LEN))
     publisher_last_updated_epoch_ms = Column(BigInteger)
 
