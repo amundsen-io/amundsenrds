@@ -29,7 +29,7 @@ class Dashboard(Base):
     group = relationship('DashboardGroup')
     description = relationship('DashboardDescription', uselist=False)
     timestamp = relationship('DashboardTimestamp', uselist=False)
-    execution = relationship('DashboardExecution', uselist=False)
+    execution = relationship('DashboardExecution', lazy='dynamic')
     usage = relationship('DashboardUsage', order_by='DashboardUsage.user_rk', backref='dashboard')
     readers = relationship('User', order_by='User.rk', secondary='dashboard_usage', backref='dashboards_read')
     owners = relationship('User', order_by='User.rk', secondary='dashboard_owner', backref='dashboards_owned')
