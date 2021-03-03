@@ -41,3 +41,19 @@ class SchemaDescription(Base):
                        nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
+
+
+class SchemaProgrammaticDescription(Base):
+    """
+    Programmatic description model for schema.
+    """
+    __tablename__ = 'schema_programmatic_description'
+
+    rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
+    description_source = Column(String(32), nullable=False)
+    description = Column(Text)
+    schema_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                       ForeignKey('schema_metadata.rk', ondelete='cascade'),
+                       nullable=False)
+    published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
+    publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
