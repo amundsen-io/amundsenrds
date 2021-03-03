@@ -26,7 +26,7 @@ class TableColumn(Base):
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
     description = relationship('ColumnDescription', uselist=False)
-    badges = relationship('Badge', order_by='Badge.rk', secondary='column_badge')
+    badges = relationship('Badge', order_by='Badge.rk', secondary='column_badge', backref='columns')
     stats = relationship('ColumnStat', order_by='ColumnStat.rk')
 
 

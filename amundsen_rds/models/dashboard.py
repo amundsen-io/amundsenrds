@@ -35,8 +35,8 @@ class Dashboard(Base):
     owners = relationship('User', order_by='User.rk', secondary='dashboard_owner', backref='dashboards_owned')
     followers = relationship('User', order_by='User.rk', secondary='dashboard_follower', backref='dashboards_followed')
     tables = relationship('Table', order_by='Table.rk', secondary='dashboard_table', backref='dashboards')
-    tags = relationship('Tag', order_by='Tag.rk', secondary='dashboard_tag')
-    badges = relationship('Badge', order_by='Badge.rk', secondary='dashboard_badge')
+    tags = relationship('Tag', order_by='Tag.rk', secondary='dashboard_tag', lazy='dynamic', backref='dashboards')
+    badges = relationship('Badge', order_by='Badge.rk', secondary='dashboard_badge', backref='dashboards')
     queries = relationship('DashboardQuery', order_by='DashboardQuery.rk')
 
 
