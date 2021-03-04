@@ -5,7 +5,7 @@ from sqlalchemy import BigInteger, Column, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 
 from amundsen_rds.models.base import (
-    INDEX_KEY_COLLATION_ARGS, KEY_LEN, NAME_LEN, PUBLISHED_TAG_LEN, Base
+    INDEX_KEY_COLLATION_ARGS, KEY_LEN, PUBLISHED_TAG_LEN, Base
 )
 
 
@@ -26,7 +26,7 @@ class TableColumn(Base):
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
 
     description = relationship('ColumnDescription', uselist=False)
-    badges = relationship('Badge', order_by='Badge.rk', secondary='column_badge')
+    badges = relationship('Badge', order_by='Badge.rk', secondary='column_badge', backref='columns')
     stats = relationship('ColumnStat', order_by='ColumnStat.rk')
 
 
@@ -69,7 +69,7 @@ class ColumnStat(Base):
     __tablename__ = 'column_stat'
 
     rk = Column(String(1536, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
-    stat_name = Column(String(NAME_LEN), nullable=False)
+    stat_type = Column(String(256), nullable=False)
     stat_val = Column(String(128), nullable=False)
     start_epoch = Column(String(16), nullable=False)
     end_epoch = Column(String(16), nullable=False)
