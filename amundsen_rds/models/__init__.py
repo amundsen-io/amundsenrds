@@ -41,7 +41,7 @@ __all__ = [
     'User'
 ]
 
-RdsModel = Union[
+RDSModel = Union[
     'Application', 'ApplicationTable', 'Badge', 'Cluster',
     'TableColumn', 'ColumnBadge', 'ColumnDescription', 'ColumnStat',
     'Dashboard', 'DashboardBadge', 'DashboardChart', 'DashboardCluster',
