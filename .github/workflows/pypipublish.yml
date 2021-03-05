@@ -1,0 +1,31 @@
+
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+jobs:
+  build-and-publish-python-module:
+    name: Build and publish python module to pypi
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Populate packages with submodule
+        run: python setup.py install
+      - name: Add wheel dependency
+        run: pip install wheel
+      - name: Generate dist
+        run: python setup.py sdist bdist_wheel
+      - name: Publish to PyPI
+        if: startsWith(github.event.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}
