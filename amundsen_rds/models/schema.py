@@ -25,6 +25,8 @@ class Schema(Base):
 
     cluster = relationship('Cluster')
     description = relationship('SchemaDescription', uselist=False)
+    programmatic_descriptions = relationship('SchemaProgrammaticDescription',
+                                             order_by='SchemaProgrammaticDescription.rk')
 
 
 class SchemaDescription(Base):
