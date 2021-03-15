@@ -13,6 +13,6 @@ class UpdatedTimestamp(Base):
     __tablename__ = 'updated_timestamp'
 
     rk = Column(String(64), primary_key=True)
-    last_timestamp = Column(Integer, nullable=False)
+    latest_timestamp = Column(Integer, nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
