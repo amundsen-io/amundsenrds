@@ -1,5 +1,6 @@
 # Copyright Contributors to the Amundsen project.
 # SPDX-License-Identifier: Apache-2.0
+
 from typing import Union
 
 from amundsen_rds.models.application import Application, ApplicationTable
@@ -39,16 +40,4 @@ RDSModel = Union[Application, ApplicationTable, Badge, Cluster,
                  TableUsage, TableWatermark, Tag, UpdatedTimestamp,
                  User]
 
-__all__ = [
-    'Application', 'ApplicationTable', 'Badge', 'Cluster',
-    'TableColumn', 'ColumnBadge', 'ColumnDescription', 'ColumnStat',
-    'Dashboard', 'DashboardBadge', 'DashboardChart', 'DashboardCluster',
-    'DashboardDescription', 'DashboardExecution', 'DashboardFollower', 'DashboardGroup',
-    'DashboardGroupDescription', 'DashboardOwner', 'DashboardQuery', 'DashboardTable',
-    'DashboardTag', 'DashboardTimestamp', 'DashboardUsage', 'Database',
-    'Schema', 'SchemaDescription', 'SchemaProgrammaticDescription', 'Table',
-    'TableBadge', 'TableDescription', 'TableFollower', 'TableOwner',
-    'TableProgrammaticDescription', 'TableSource', 'TableTag', 'TableTimestamp',
-    'TableUsage', 'TableWatermark', 'Tag', 'UpdatedTimestamp',
-    'User', 'RDSModel'
-]
+__all__ = ['RDSModel']
