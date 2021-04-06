@@ -32,7 +32,7 @@ class Table(Base):
     columns = relationship('TableColumn', order_by='TableColumn.sort_order')
     description = relationship('TableDescription', uselist=False)
     programmatic_descriptions = relationship('TableProgrammaticDescription', order_by='TableProgrammaticDescription.rk')
-    tags = relationship('Tag', order_by='Tag.rk', secondary='table_tag', lazy='dynamic', backref='tables')
+    tags = relationship('Tag', order_by='Tag.rk', secondary='table_tag', backref='tables')
     badges = relationship('Badge', order_by='Badge.rk', secondary='table_badge', backref='tables')
     timestamp = relationship('TableTimestamp', uselist=False)
     watermarks = relationship('TableWatermark', order_by='TableWatermark.rk')
