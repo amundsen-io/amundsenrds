@@ -3,11 +3,11 @@
 
 from setuptools import find_packages, setup
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 
 requirements = [
-    'sqlalchemy>=1.3.0,<2.0'
+    'sqlalchemy>=1.3.0,<1.4'
 ]
 
 setup(
