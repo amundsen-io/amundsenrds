@@ -10,6 +10,7 @@ Amundsenrds will be used in [databuilder](https://github.com/amundsen-io/amundse
 
 ## Requirements
 - Python >= 3.6.x
+- MySQL >= 5.7
 
 ## Instructions to configure venv
 - In the terminal window, change directory to [amundsen-rds](https://github.com/amundsen-io/amundsenrds]).

@@ -3,7 +3,7 @@
 
 from setuptools import find_packages, setup
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 
 requirements = [
@@ -26,5 +26,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    package_data={'amundsen_rds': ['py.typed']}
+    package_data={
+        'amundsen_rds': ['py.typed', '*.ini']
+    }
 )
