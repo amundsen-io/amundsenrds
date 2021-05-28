@@ -3,11 +3,12 @@
 
 from setuptools import find_packages, setup
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 
 requirements = [
-    'sqlalchemy>=1.3.0,<1.4'
+    'sqlalchemy>=1.3.0,<1.4',
+    'alembic>=1.2,<2.0'
 ]
 
 setup(
@@ -26,5 +27,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
-    package_data={'amundsen_rds': ['py.typed']}
+    package_data={
+        'amundsen_rds': ['py.typed', '*.ini']
+    }
 )
