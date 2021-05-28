@@ -7,7 +7,8 @@ __version__ = '0.0.5'
 
 
 requirements = [
-    'sqlalchemy>=1.3.0,<1.4'
+    'sqlalchemy>=1.3.0,<1.4',
+    'alembic>=1.2,<2.0'
 ]
 
 setup(
