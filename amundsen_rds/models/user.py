@@ -18,6 +18,7 @@ class User(Base):
     rk = Column(String(320, **INDEX_KEY_COLLATION_ARGS), primary_key=True)
     email = Column(String(320), nullable=False)
     is_active = Column(Boolean)
+    profile_url = Column(String(320))
     first_name = Column(String(64))
     last_name = Column(String(64))
     full_name = Column(String(256))
