@@ -7,7 +7,7 @@ from amundsen_rds.models.application import Application, ApplicationTable
 from amundsen_rds.models.badge import Badge
 from amundsen_rds.models.cluster import Cluster
 from amundsen_rds.models.column import (
-    ColumnBadge, ColumnDescription, ColumnStat, TableColumn
+    ColumnBadge, ColumnDescription, ColumnLineage, ColumnStat, TableColumn
 )
 from amundsen_rds.models.dashboard import (
     Dashboard, DashboardBadge, DashboardChart, DashboardCluster,
@@ -20,22 +20,22 @@ from amundsen_rds.models.schema import (
     Schema, SchemaDescription, SchemaProgrammaticDescription
 )
 from amundsen_rds.models.table import (
-    Table, TableBadge, TableDescription, TableFollower, TableOwner,
-    TableProgrammaticDescription, TableSource, TableTag, TableTimestamp,
-    TableUsage, TableWatermark
+    Table, TableBadge, TableDescription, TableFollower, TableLineage,
+    TableOwner, TableProgrammaticDescription, TableSource, TableTag,
+    TableTimestamp, TableUsage, TableWatermark
 )
 from amundsen_rds.models.tag import Tag
 from amundsen_rds.models.updated_timestamp import UpdatedTimestamp
 from amundsen_rds.models.user import User
 
 RDSModel = Union[Application, ApplicationTable, Badge, Cluster,
-                 TableColumn, ColumnBadge, ColumnDescription, ColumnStat,
+                 TableColumn, ColumnBadge, ColumnDescription, ColumnLineage, ColumnStat,
                  Dashboard, DashboardBadge, DashboardChart, DashboardCluster,
                  DashboardDescription, DashboardExecution, DashboardFollower, DashboardGroup,
                  DashboardGroupDescription, DashboardOwner, DashboardQuery, DashboardTable,
                  DashboardTag, DashboardTimestamp, DashboardUsage, Database,
                  Schema, SchemaDescription, SchemaProgrammaticDescription, Table,
-                 TableBadge, TableDescription, TableFollower, TableOwner,
+                 TableBadge, TableDescription, TableFollower, TableLineage, TableOwner,
                  TableProgrammaticDescription, TableSource, TableTag, TableTimestamp,
                  TableUsage, TableWatermark, Tag, UpdatedTimestamp,
                  User]

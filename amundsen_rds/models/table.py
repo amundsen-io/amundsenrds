@@ -204,3 +204,19 @@ class TableWatermark(Base):
                       nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
+
+
+class TableLineage(Base):
+    """
+    Table lineage model.
+    """
+    __tablename__ = 'table_lineage'
+
+    table_source_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                             ForeignKey('table_metadata.rk', ondelete='cascade'),
+                             primary_key=True)
+    table_target_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                             ForeignKey('table_metadata.rk', ondelete='cascade'),
+                             primary_key=True)
+    published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
+    publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
