@@ -78,3 +78,19 @@ class ColumnStat(Base):
                        nullable=False)
     published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
     publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)
+
+
+class ColumnLineage(Base):
+    """
+    Column lineage model.
+    """
+    __tablename__ = 'column_lineage'
+
+    column_source_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                              ForeignKey('column_metadata.rk', ondelete='cascade'),
+                              primary_key=True)
+    column_target_rk = Column(String(KEY_LEN, **INDEX_KEY_COLLATION_ARGS),
+                              ForeignKey('column_metadata.rk', ondelete='cascade'),
+                              primary_key=True)
+    published_tag = Column(String(PUBLISHED_TAG_LEN), nullable=False)
+    publisher_last_updated_epoch_ms = Column(BigInteger, nullable=False)

@@ -9,9 +9,10 @@ The schema in ORM models follows the logic of [databuilder models](https://githu
 Amundsenrds will be used in [databuilder](https://github.com/amundsen-io/amundsendatabuilder) and [metadatalibrary](https://github.com/amundsen-io/amundsenmetadatalibrary) for metadata storage and retrieval with relational databases.
 
 ## Requirements
-- Python >= 3.6.x
-- MySQL >= 5.7
-
+- Python: >= 3.6
+- MySQL: 5.7, 8
+  
+**Note**: amundsen-rds(version >= 0.0.8) comes with SQLAlchemy ORM features supported only in MySQL 8 in the correlated amundsen [metadata-service](https://github.com/amundsen-io/amundsen/tree/main/metadata).
 ## Instructions to configure venv
 - In the terminal window, change directory to [amundsen-rds](https://github.com/amundsen-io/amundsenrds]).
 ```
