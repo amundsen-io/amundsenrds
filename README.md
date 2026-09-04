@@ -1,3 +1,5 @@
+# Due to inactivity, this project was archived in September 2026. The contents will remain available for historical purposes.
+
 # amundsenrds
 [![PyPI version](https://badge.fury.io/py/amundsen-rds.svg)](https://badge.fury.io/py/amundsen-rds)
 [![License](https://img.shields.io/:license-Apache%202-blue.svg)](LICENSE)
